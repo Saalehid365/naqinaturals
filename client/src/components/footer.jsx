@@ -15,9 +15,9 @@ import {
 const Footer = () => {
   return (
     <div className=" flex flex-col px-32 bg-homehero bg-cover bg-bottom">
-      <div className="flex justify-between items-start pt-20 pb-12 font-thin">
+      <div className="flex justify-between items-start pt-20 pb-12 font-thin text-black">
         <div>
-          <img src={logotrans} className="h-28 w-60"></img>
+          <img src={logotrans} className="h-28 w-60" alt="logo"></img>
           <h2 className="text-xs pt-6">Pure and Natural combined</h2>
         </div>
         <div className="flex flex-col text-sm">
@@ -72,7 +72,7 @@ const Footer = () => {
           <FaInstagram />
         </div>
         <div>
-          <img src={payment} className="h-14 w-72"></img>
+          <img src={payment} className="h-14 w-72" alt="payments"></img>
         </div>
       </div>
       <div className="flex justify-between font-thin pt-4 pb-4 text-xs">

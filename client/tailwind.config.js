@@ -13,6 +13,7 @@ module.exports = {
         blackseed: "url('/src/pages/homepage/blackseeds.jpeg')",
         magnesium: "url('/src/pages/homepage/mag.webp')",
         colloidal: "url('/src/pages/homepage/droper.webp')",
+        shopbg: "url('/src/pages/shop/shopbg.jpg')",
       },
     },
   },

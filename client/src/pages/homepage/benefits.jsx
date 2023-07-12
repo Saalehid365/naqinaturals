@@ -135,7 +135,7 @@ const Benefits = () => {
           </div>
         </div>
       </div>
-      <img src={elderflower} className="w-1/2 h-96"></img>
+      <img src={elderflower} className="w-1/2 h-96" alt="elderbeery"></img>
     </div>
   );
 };
