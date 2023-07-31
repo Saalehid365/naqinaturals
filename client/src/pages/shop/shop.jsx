@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Navbar from "../../components/navbar";
-import { productsList } from "../../products";
 import { Link } from "react-router-dom";
+import { ShopContext } from "../../context/shop-context";
+import { productsList } from "../../products";
+
 const Shop = () => {
   return (
     <div className="pb-32">
@@ -13,7 +15,7 @@ const Shop = () => {
       </div>
       <div className="px-12  pt-14 grid grid-cols-4 grid-rows-1 gap-1  gap-y-10 justify-items-center">
         {productsList.map((product) => (
-          <Link to={`/shop/${product.sku}`} className="">
+          <Link to={`/shop/${product.sku}`} className="" data={product}>
             <img
               className="w-72"
               alt="image1"

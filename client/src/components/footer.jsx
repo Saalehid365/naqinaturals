@@ -22,27 +22,35 @@ const Footer = () => {
         </div>
         <div className="flex flex-col text-sm">
           <h2 className="font-normal text-md uppercase pb-6">Usefull pages</h2>
-          <Link className="pb-2 ">About</Link>
-          <Link className="pb-2">Contact</Link>
-          <Link className="pb-2">Policy</Link>
-          <Link className="pb-2">Flash Sale</Link>
+          <Link to="about" className="pb-2 ">
+            About
+          </Link>
+          <Link to="contact" className="pb-2">
+            Contact
+          </Link>
+          <Link to="policy" className="pb-2">
+            Policy
+          </Link>
+          <Link to="sale" className="pb-2">
+            Flash Sale
+          </Link>
         </div>
         <div className="flex flex-col text-sm">
           <h2 className="font-normal text-md uppercase pb-6">Help Center</h2>
-          <Link className="pb-2">Payments</Link>
-          <Link className="pb-2">Shipping</Link>
-          <Link className="pb-2">FAQs</Link>
-          <Link className="pb-2">Checkout</Link>
+          <Link to="payments" className="pb-2">
+            Payments
+          </Link>
+          <Link to="shipping" className="pb-2">
+            Shipping
+          </Link>
+          <Link to="faqs" className="pb-2">
+            FAQs
+          </Link>
+          <Link to="checkout" className="pb-2">
+            Checkout
+          </Link>
         </div>
-        <div className="flex flex-col text-sm">
-          <h2 className="font-normal text-md uppercase pb-6">
-            Store Information
-          </h2>
-          <Link className="pb-2">Store Information</Link>
-          <Link className="pb-2">About Store</Link>
-          <Link className="pb-2">Best Sellers</Link>
-          <Link className="pb-2">Latest Products</Link>
-        </div>
+
         <div className="flex flex-col text-sm">
           <h2 className="font-normal text-md uppercase pb-6">Contacts</h2>
           <div className="flex items-center pb-6 ">
@@ -59,20 +67,17 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between items-center  border-y-2 border-gray-200">
+      <div className="flex justify-between items-center  border-y-2 border-gray-200 h-12 ">
         <div className="flex text-sm font-thin">
           <Link className="px-4 border-x-2">Home</Link>
           <Link className="px-4 border-r-2">About</Link>
           <Link className="px-4 border-r-2">Shop</Link>
           <Link className="px-4 border-r-2">Contact us</Link>
         </div>
-        <div className="flex w-60 justify-evenly font-thin text-gray-600">
+        <div className="flex w-60 justify-evenly font-thin text-gray-600 border-r-2">
           <FaFacebook />
           <FaTwitter />
           <FaInstagram />
-        </div>
-        <div>
-          <img src={payment} className="h-14 w-72" alt="payments"></img>
         </div>
       </div>
       <div className="flex justify-between font-thin pt-4 pb-4 text-xs">

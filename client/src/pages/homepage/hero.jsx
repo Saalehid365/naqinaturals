@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar";
 
 const Hero = () => {
   return (
-    <div className="bg-homehero h-[80vh] bg-no-repeat bg-cover bg-top">
+    <div className="bg-homehero h-[70vh] bg-no-repeat bg-cover bg-bottom">
       <Navbar />
       <div className="flex flex-col justify-center items-center h-3/4">
         <h2 className="text-7xl text-white w-2/4 text-center font-light">

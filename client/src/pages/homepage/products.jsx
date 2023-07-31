@@ -19,7 +19,7 @@ const Products = () => {
           <h2 className="underline">View all</h2>
         </div>
       </div>
-      <div className=" pt-14 grid grid-cols-4 grid-rows-1 gap-1">
+      <div className=" pt-14 grid grid-cols-4 grid-rows-1 gap-10">
         {productsList.map((product) => (
           <Link to={`/shop/${product.sku}`} className="w-72 relative">
             <img src="https://www.nealsyardremedies.com/cdn/shop/products/neals-yard-remedies-organic-elderberry-syrup-150ml-37337291423964_1800x1800.jpg?v=1656066787"></img>

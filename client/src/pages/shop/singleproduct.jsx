@@ -1,74 +1,79 @@
-import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
-import { productsList } from "../../products";
+import React, { useContext, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../../components/navbar";
-import { FaCartPlus } from "react-icons/fa";
 import Description from "./description";
 import Ingredients from "./ingredients";
-import { ShopContext } from "../../context/shop-context";
+import { CartContext } from "../../context/shop-context";
+import { productsList } from "../../products";
+import { Button, Input, useDisclosure } from "@chakra-ui/react";
 
-const Singleproduct = () => {
+import Footer from "../../components/footer";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from "@chakra-ui/react";
+import { FaArrowLeft } from "react-icons/fa";
+import SideCartProduct from "./sideCartProduct";
+
+const Singleproduct = (props) => {
+  const { addOneToCart, updateCartItemCount, cartProducts, removeOneFromCart } =
+    useContext(CartContext);
+
+  const cart = useContext(CartContext);
+
   const { productId } = useParams();
   const product = productsList.find((product) => product.sku === productId);
-  const { name, price, id } = product;
-  const { addToCart, cartItems, removeFromCart } = useContext(ShopContext);
-  const cartItemAmount = cartItems[id];
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleBasket = () => {
+    addOneToCart(product.id);
+    onOpen();
+  };
+  console.log(cart.items);
 
   return (
-    <div>
+    <div className="relative">
       <div className="h-96 bg-shopbg bg-no-repeat bg-cover bg-bottom">
         <Navbar />
         <div className="w-full flex justify-center items-center h-60">
           <h2 className="text-6xl text-white font-light">Shop</h2>
         </div>
       </div>
-      <div className=" bg-orange-100 px-60">
+      <div className=" bg-gray-100 px-60">
+        <Link to="/shop" className="flex pt-10 items-center">
+          <FaArrowLeft />
+          <h2 className="pl-4">Return to shop</h2>
+        </Link>
         <div className="pt-32 flex justify-between pb-12">
           <div className="bg-bg1 h-96 w-2/4"></div>
           <div className="w-2/5">
             <div className="border-b-2 border-orange-200">
-              <h1 className="text-5xl font-semibold pb-2">{name}</h1>
-              <h3>£{price}</h3>
+              <h1 className="text-5xl font-semibold pb-2">{product.name}</h1>
+              <h2>{product.name2}</h2>
+              <h3>£{product.price}</h3>
+              <div className="flex text-gray-600">
+                Brand: <h4> {product.brand}</h4>
+              </div>
             </div>
             <div className=" flex flex-col justify-between border-b-2 border-orange-200 pb-2 font-thin">
-              <h3 className="text-sm pt-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
-                ad repudiandae iusto, quis impedit perferendis maiores delectus
-                officiis a earum?
-              </h3>
+              <h3 className="text-sm pt-2">{product.description1}</h3>
 
               <h2 className="pt-10">Hurry up! Deals end up:</h2>
 
               <div className="pt-10 flex  w-96 justify-between">
-                <div className="w-32 h-10 bg-black text-white flex justify-evenly">
-                  <button
-                    onClick={() => removeFromCart(id)}
-                    className="border-r-2 pr-4 border-gray-500"
+                <div className="flex w-72 justify-between">
+                  <Button
+                    colorScheme="blue"
+                    className="p-2 bg-green-600 rounded-md w-32"
+                    onClick={handleBasket}
                   >
-                    -
-                  </button>
-                  <h3 className="w-6 text-gray-100 flex justify-center items-center">
-                    1
-                  </h3>
-                  <button
-                    onClick={() => addToCart(id)}
-                    className="border-l-2 pl-4 border-gray-500"
-                  >
-                    +
-                  </button>
-                </div>
-                <div>
-                  <button
-                    onClick={() => addToCart(id)}
-                    className="flex justify-evenly items-center h-10 w-40 bg-orange-700 text-gray-100"
-                  >
-                    Add Cart{" "}
-                    {cartItemAmount < 1 ? (
-                      <FaCartPlus />
-                    ) : (
-                      <>({cartItemAmount})</>
-                    )}
-                  </button>
+                    Add to cart
+                  </Button>
                 </div>
               </div>
               <h3 className="pt-10">
@@ -85,10 +90,35 @@ const Singleproduct = () => {
           </div>
         </div>
         <div className="flex">
-          <Description />
-          <Ingredients />
+          <Description product={product} />
+          <Ingredients product={product} />
         </div>
       </div>
+      <>
+        <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"sm"}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader pl={12}>Your basket</DrawerHeader>
+            <DrawerBody>
+              {cart.items.map((currentProduct, idx) => (
+                <SideCartProduct
+                  key={idx}
+                  id={currentProduct.id}
+                  quantity={currentProduct.quantity}
+                  currentProduct={currentProduct}
+                ></SideCartProduct>
+              ))}
+              <Link to="/shoppingcart">
+                <Button colorScheme="blue" width={96}>
+                  Cart
+                </Button>
+              </Link>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </>
+      <Footer />
     </div>
   );
 };
