@@ -1,124 +1,136 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-import Navbar from "../../components/navbar";
-import Description from "./description";
-import Ingredients from "./ingredients";
 import { CartContext } from "../../context/shop-context";
 import { productsList } from "../../products";
-import { Button, Input, useDisclosure } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
-import Footer from "../../components/footer";
-import {
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-} from "@chakra-ui/react";
-import { FaArrowLeft } from "react-icons/fa";
-import SideCartProduct from "./sideCartProduct";
+import SubscribeForm from "../../components/subscriptionForm";
+import { FaCheck, FaStar } from "react-icons/fa";
+import Cartpopup from "./cartpopup";
+import Dropdown from "./dropdown";
+import Yotpo from "../../components/yotpo";
 
 const Singleproduct = (props) => {
-  const { addOneToCart, updateCartItemCount, cartProducts, removeOneFromCart } =
-    useContext(CartContext);
-
-  const cart = useContext(CartContext);
+  const { addOneToCart, isOpen, onClose, onOpen } = useContext(CartContext);
 
   const { productId } = useParams();
+
   const product = productsList.find((product) => product.sku === productId);
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleBasket = () => {
     addOneToCart(product.id);
     onOpen();
   };
-  console.log(cart.items);
 
   return (
-    <div className="relative">
-      <div className="h-96 bg-shopbg bg-no-repeat bg-cover bg-bottom">
-        <Navbar />
-        <div className="w-full flex justify-center items-center h-60">
-          <h2 className="text-6xl text-white font-light">Shop</h2>
-        </div>
-      </div>
-      <div className=" bg-gray-100 px-60">
-        <Link to="/shop" className="flex pt-10 items-center">
-          <FaArrowLeft />
-          <h2 className="pl-4">Return to shop</h2>
-        </Link>
-        <div className="pt-32 flex justify-between pb-12">
-          <div className="bg-bg1 h-96 w-2/4"></div>
-          <div className="w-2/5">
-            <div className="border-b-2 border-orange-200">
-              <h1 className="text-5xl font-semibold pb-2">{product.name}</h1>
-              <h2>{product.name2}</h2>
-              <h3>£{product.price}</h3>
-              <div className="flex text-gray-600">
-                Brand: <h4> {product.brand}</h4>
-              </div>
-            </div>
-            <div className=" flex flex-col justify-between border-b-2 border-orange-200 pb-2 font-thin">
-              <h3 className="text-sm pt-2">{product.description1}</h3>
-
-              <h2 className="pt-10">Hurry up! Deals end up:</h2>
-
-              <div className="pt-10 flex  w-96 justify-between">
-                <div className="flex w-72 justify-between">
-                  <Button
-                    colorScheme="blue"
-                    className="p-2 bg-green-600 rounded-md w-32"
-                    onClick={handleBasket}
-                  >
-                    Add to cart
-                  </Button>
-                </div>
-              </div>
-              <h3 className="pt-10">
-                Worldwide Shipping - Free Delivery for orders over £75
-              </h3>
-            </div>
-            <div className="pt-2">
-              <div className="flex text-xs">
-                <h3>Catergory:</h3>
-                <h2>Organic</h2>
-              </div>
-              <div></div>
+    <div className="relative ">
+      <div className=" pb-24 flex justify-center flex-col items-center">
+        <div className="pt-10 flex justify-evenly mb-24 px-12">
+          <div className="w-1/3 object-cover">
+            <img alt="img1" className="" src={product.image}></img>
+            <div
+              alt="img1"
+              className="grid grid-cols-4 grid-rows-1 gap-2 gap-y-4 mt-2"
+            >
+              <img
+                alt="img1"
+                className=""
+                src="https://thatgirlcookshealthy.com/wp-content/uploads/2021/07/Sea-Moss-Gel-image.png"
+              ></img>
+              <img
+                alt="img1"
+                className=""
+                src="https://pureseamoss.co.uk/cdn/shop/files/Cleanse-RawturmericInfusedSeaMossGel_1000x.jpg?v=1689701030"
+              ></img>
+              <img
+                alt="img1"
+                className=""
+                src="https://tastegreatfoodie.com/wp-content/uploads/2023/02/sea-moss-gel.jpg"
+              ></img>
+              <img
+                alt="img1"
+                className=""
+                src="https://tastegreatfoodie.com/wp-content/uploads/2023/02/sea-moss-gel.jpg"
+              ></img>
             </div>
           </div>
-        </div>
-        <div className="flex">
-          <Description product={product} />
-          <Ingredients product={product} />
-        </div>
-      </div>
-      <>
-        <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"sm"}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader pl={12}>Your basket</DrawerHeader>
-            <DrawerBody>
-              {cart.items.map((currentProduct, idx) => (
-                <SideCartProduct
-                  key={idx}
-                  id={currentProduct.id}
-                  quantity={currentProduct.quantity}
-                  currentProduct={currentProduct}
-                ></SideCartProduct>
-              ))}
-              <Link to="/shoppingcart">
-                <Button colorScheme="blue" width={96}>
-                  Cart
+          <div className="w-3/5 pl-8">
+            <h1 className="text-2xl font-semibold pb-4 text-colourTwo">
+              {product.name}
+            </h1>
+            <div className="text-xl pb-4 text-colourThree flex justify-between w-56">
+              <h2 className="">{product.name2} -</h2>
+              <h2 className="">100ml</h2>
+            </div>
+
+            <div className="flex w-52 justify-between pb-4 text-lg text-colourFour items-center hover:text-colourThree hover:cursor-pointer">
+              <FaStar />
+              <FaStar />
+              <FaStar />
+              <FaStar />
+              <FaStar />
+
+              <div>
+                <p className="underline underline-offset-4 text-sm">
+                  {" "}
+                  8 Reviews
+                </p>
+              </div>
+            </div>
+
+            <div className="w-3/5">
+              <p className="text-lg">
+                £<span>{product.price}</span>
+              </p>
+            </div>
+
+            <div>
+              <label for="size">Choose size:</label>
+
+              <select id="cars">
+                <option value="saab">
+                  <Link to="shop/:productId" value="volvo">
+                    200ml
+                  </Link>
+                </option>
+                <option value="vw">VW</option>
+                <option value="audi" selected>
+                  Audi
+                </option>
+              </select>
+            </div>
+
+            <div className="flex flex-col justify-between mt-10 pb-6">
+              <div className="flex w-72 justify-between">
+                <Button
+                  height="12"
+                  width="40"
+                  className="p-2 border border-black text-black w-32"
+                  onClick={handleBasket}
+                  rounded={2}
+                  bg="brand.colourFour"
+                  textColor="white"
+                >
+                  Add to cart
                 </Button>
-              </Link>
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
-      </>
-      <Footer />
+              </div>
+            </div>
+            <div className=" pb-4 mb-20">
+              <h3 className="tracking-wide text-lg pt-4 font-light text-gray-800  leading-8">
+                {product.description1}
+              </h3>
+            </div>
+            <Dropdown
+              benefits={product.benefits}
+              usage={product.howToUse}
+              Ingredients={product.Ingredients}
+              benefitPoints={product.benefitPoints}
+            />
+          </div>
+        </div>
+        <Cartpopup />
+        <SubscribeForm />
+      </div>
     </div>
   );
 };

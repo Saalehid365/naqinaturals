@@ -1,32 +1,42 @@
-import React, { useContext, useEffect } from "react";
-import Navbar from "../../components/navbar";
-import { Link } from "react-router-dom";
-import { ShopContext } from "../../context/shop-context";
+import React, { useContext, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { productsList } from "../../products";
+import Hero2 from "../homepage/hero2";
+import { CartContext } from "../../context/shop-context";
+import Cartpopup from "./cartpopup";
 
 const Shop = () => {
+  const { catergoryId } = useParams();
+
+  {
+    /*const catergoryFilter = productsList.find(
+    (product) => product.catergory === catergoryId
+  );*/
+  }
+
   return (
-    <div className="pb-32">
-      <div className="h-96 bg-shopbg bg-no-repeat bg-cover bg-bottom">
-        <Navbar />
-        <div className="w-full flex justify-center items-center h-60">
-          <h2 className="text-6xl text-white font-light">Shop</h2>
+    <div className="">
+      <div className=" w-full ">
+        <div className=" pt-14 grid grid-cols-4 grid-rows-1 gap-y-6 gap-x-12 justify-items-center pb-40 h-full px-10">
+          {productsList.map((product) => (
+            <Link
+              to={`/shop/${product.sku}`}
+              className="w-full col-span-1 "
+              data={product}
+            >
+              <img
+                className="w-full h-96 "
+                alt="image1"
+                src={product.image}
+              ></img>
+              <div className="flex flex-col justify-center items-start h-20 w-full font-normal font-serif text-black">
+                <h2 className="text-sm font-black">{product.name}</h2>
+                <h3 className="text-sm pt-2">£{product.price}</h3>
+              </div>
+            </Link>
+          ))}
         </div>
-      </div>
-      <div className="px-12  pt-14 grid grid-cols-4 grid-rows-1 gap-1  gap-y-10 justify-items-center">
-        {productsList.map((product) => (
-          <Link to={`/shop/${product.sku}`} className="" data={product}>
-            <img
-              className="w-72"
-              alt="image1"
-              src="https://www.nealsyardremedies.com/cdn/shop/products/neals-yard-remedies-organic-elderberry-syrup-150ml-37337291423964_1800x1800.jpg?v=1656066787"
-            ></img>
-            <div className="flex flex-col justify-center items-center bg-gray-100 h-20 w-full font-thin ">
-              <h2 className="text-lg">{product.name}</h2>
-              <h3 className="text-sm">{product.price}</h3>
-            </div>
-          </Link>
-        ))}
+        {/*<Cartpopup />*/}
       </div>
     </div>
   );

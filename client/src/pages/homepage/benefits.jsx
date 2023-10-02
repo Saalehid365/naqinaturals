@@ -32,10 +32,10 @@ const Benefits = () => {
   };
 
   return (
-    <div className="flex pt-44 bg-bg3 bg-center px-40 pb-24">
+    <div className="flex pt-44  bg-center px-40 pb-24 text-lg">
       <div className="w-2/4 ">
         <div>
-          <h3 className="pb-2 font-light text-xs">Organic is the way to go</h3>
+          <h3 className="pb-2 font-light text-md">Organic is the way to go</h3>
           <h2 className="text-4xl font-light w-2/3">
             Most asked questions about our products
           </h2>

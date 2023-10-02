@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import { productsList, getProductData } from "../products";
+import { getProductData } from "../products";
+import { useDisclosure } from "@chakra-ui/react";
 
 export const CartContext = createContext({
   items: [],
@@ -12,6 +13,10 @@ export const CartContext = createContext({
 
 export function CartProvider({ children }) {
   const [cartProducts, setCartProducts] = useState([]);
+  const [filter, setFilter] = useState("");
+  const [brand, setBrand] = useState("");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // [ { id: 1 , quantity: 3 }, { id: 2, quantity: 1 } ]
   function getProductQuantity(id) {
@@ -55,7 +60,7 @@ export function CartProvider({ children }) {
   function removeOneFromCart(id) {
     const quantity = getProductQuantity(id);
 
-    if (quantity == 1) {
+    if (quantity === 1) {
       deleteFromCart(id);
     } else {
       setCartProducts(
@@ -75,7 +80,7 @@ export function CartProvider({ children }) {
     // [product1, product3]
     setCartProducts((cartProducts) =>
       cartProducts.filter((currentProduct) => {
-        return currentProduct.id != id;
+        return currentProduct.id !== id;
       })
     );
   }
@@ -96,6 +101,13 @@ export function CartProvider({ children }) {
     removeOneFromCart,
     deleteFromCart,
     getTotalCost,
+    filter,
+    setFilter,
+    setBrand,
+    brand,
+    isOpen,
+    onClose,
+    onOpen,
   };
 
   return (
@@ -104,8 +116,3 @@ export function CartProvider({ children }) {
 }
 
 export default CartProvider;
-
-// CODE DOWN HERE
-
-// Context (cart, addToCart, removeCart)
-// Provider -> gives your React app access to all the things in your context

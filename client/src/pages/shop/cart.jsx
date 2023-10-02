@@ -1,23 +1,21 @@
-import React, { useContext, useState } from "react";
-import Navbar from "../../components/navbar";
+import React, { useContext, useEffect } from "react";
 import Cartitems from "./cartitems";
-import { FaCartArrowDown } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CartContext } from "../../context/shop-context";
-import { productsList } from "../../products";
 
 const Cart = () => {
-  const { cartItems, getTotalCartAmount, cartProducts } =
+  const { cartItems, getTotalCartAmount, cartProducts, getTotalCost } =
     useContext(CartContext);
   const cart = useContext(CartContext);
 
-  console.log(cart.items);
   const productsCount = cart.items.reduce(
     (sum, product) => sum + product.quantity,
     0
   );
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    localStorage.setItem("cartItem", JSON.stringify(cart.items));
+  }, [cart]);
 
   const checkout = async () => {
     await fetch("http://localhost:4000/checkout", {
@@ -36,28 +34,14 @@ const Cart = () => {
   };
 
   return (
-    <div>
-      <div className="h-96 bg-shopbg bg-no-repeat bg-cover bg-bottom">
-        <Navbar />
-        <div className="w-full flex justify-center items-center h-60">
-          <h2 className="text-6xl text-white font-light">Cart</h2>
-        </div>
-      </div>
+    <div className="pb-32">
       {productsCount > 0 ? (
-        <div className="pl-32 pt-20">
+        <div className="px-32 pt-20">
           <div className="pb-6">
-            <h2 className="text-3xl">Shopping Cart</h2>
-          </div>
-          <div className="w-2/3 bg-blue-200 mb-4 pl-2">
-            spend £15:00 get free delivery
-          </div>
-          <div className="w-2/3 grid grid-cols-4 mb-4">
-            <h2 className="col-span-2">Item</h2>
-            <h2 className=" justify-self-center">Quantity</h2>
-            <h2 className="justify-self-end pr-4">Total</h2>
+            <h2 className="text-2xl">Shopping Cart</h2>
           </div>
           <div className="flex ">
-            <div className="grid grid-cols-1 w-2/3  pb-12">
+            <div className="grid grid-cols-1 w-full  pb-12">
               {cart.items.map((currentProduct, idx) => (
                 <Cartitems
                   key={idx}
@@ -68,23 +52,39 @@ const Cart = () => {
               ))}
             </div>
           </div>
-          <button onClick={checkout}> checkout</button>
+          <div className="w-full flex justify-end">
+            <div className="w-1/3 flex flex-col">
+              <div className="flex justify-between pb-4">
+                <h3 className="text-xl font-bold">Subtotal</h3>
+                <h3 className="font-light text-2xl">
+                  £{cart.getTotalCost().toFixed(2)}
+                </h3>
+              </div>
+              <button
+                onClick={checkout}
+                className="h-12  text-white bg-colourFive text-xl font-semibold hover:bg-gray-600"
+              >
+                checkout
+              </button>
+            </div>
+          </div>
         </div>
       ) : (
-        <div className="pt-12 pb-12">
-          <h2 className="text-2xl font-bold pl-32">Shopping cart</h2>
-          <div className="w-full  flex flex-col justify-evenly items-center h-72 pt-6">
-            <div className="h-40 w-40 rounded-full bg-gray-400 flex justify-center items-center">
-              <FaCartArrowDown className="text-7xl text-gray-200" />
-            </div>
-            <h3>Your shopping cart is empty</h3>
-            <Link to="/shop" className="text-blue-600">
+        <div className="pt-12">
+          <h2 className="text-2xl font-bold font-serif pl-12">Shopping cart</h2>
+          <div className="  flex flex-col h-72 pt-6 pl-12">
+            <h3 className="font-serif text-xl">
+              You have nothing in your cart is empty.
+            </h3>
+            <Link
+              to="/shop"
+              className=" bg-fithly w-48 h-12 flex items-center justify-center text-white mt-8 hover:bg-gray-600"
+            >
               Start shopping
             </Link>
           </div>
         </div>
       )}
-      <div>{getTotalCartAmount}</div>
     </div>
   );
 };
